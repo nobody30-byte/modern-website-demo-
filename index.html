@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex – Webdesigner & Photographer</title>
+
+  <!-- Google font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome for social icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <style>
+    :root{
+      /* gradient used for the moving scenery + text */
+      --hero-gradient:
+        radial-gradient(circle at 0% 0%, #6366f1 0, transparent 45%),
+        radial-gradient(circle at 100% 0%, #ec4899 0, transparent 45%),
+        radial-gradient(circle at 0% 100%, #22d3ee 0, transparent 45%);
+    }
+
+    /* GLOBAL BASE */
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{margin:0;padding:0;}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:#111;background:#fff;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+
+    /* HEADER */
+    .site-header{
+      position:sticky;top:0;z-index:20;
+      background:#ffffffee;
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid #f1f1f1;
+    }
+    .header-inner{
+      max-width:1120px;
+      margin:0 auto;
+      padding:1.4rem 4vw;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:2rem;
+    }
+    .logo{font-weight:700;font-size:1.4rem;letter-spacing:.02em;}
+    .dot{color:#ff3b6a;}
+
+    .main-nav{display:flex;gap:2rem;font-size:.95rem;}
+    .main-nav a{position:relative;}
+    .main-nav a::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-.25rem;
+      width:0;height:1px;
+      background:#111;
+      transition:width .2s ease;
+    }
+    .main-nav a:hover::after{width:100%;}
+
+    .header-actions{display:flex;align-items:center;gap:1.25rem;}
+    .lang-switch{
+      font-size:.8rem;text-transform:uppercase;
+      display:flex;gap:.5rem;opacity:.6;
+    }
+    .lang--inactive{opacity:.3;}
+
+    /* BUTTONS */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:.6rem 1.6rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-size:.85rem;font-weight:500;
+      letter-spacing:.02em;
+      cursor:pointer;
+      transition:background .2s,color .2s,border-color .2s,transform .1s;
+    }
+    .btn-dark{background:#111;color:#fff;}
+    .btn-dark:hover{transform:translateY(-1px);background:#000;}
+    .btn-outline{background:transparent;color:#111;border-color:#111;}
+    .btn-outline:hover{background:#111;color:#fff;}
+
+    /* HERO */
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding-top:3.5rem;
+      padding-bottom:4rem;
+      background:#ffffff;
+    }
+
+    /* blurred moving scenery behind everything */
+    .hero-bg{
+      position:absolute;
+      inset:-30%;
+      background:var(--hero-gradient);
+      background-size:200% 200%;
+      background-position:0% 0%;
+      filter:blur(40px);
+      opacity:0.65;
+      animation:heroGradientMove 20s ease-in-out infinite alternate;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      max-width:1120px;
+      margin:0 auto;
+      padding:0 4vw;
+      text-align:center;
+    }
+
+    .hero-intro{margin:0 0 1.3rem;font-size:1rem;color:#555;}
+    .hero-intro strong{font-weight:600;}
+    .wave{margin-right:.3rem;}
+
+    .hero-titles{position:relative;}
+
+    /* main word: moving gradient inside the text */
+    .hero-title-main{
+      margin:0;
+      font-size:clamp(3.5rem,8vw,5.2rem);
+      line-height:.9;
+      font-weight:800;
+      letter-spacing:-.05em;
+      background-image:var(--hero-gradient);
+      background-size:200% 200%;
+      background-position:0% 0%;
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      animation:heroGradientMove 20s ease-in-out infinite alternate;
+    }
+
+    /* secondary word: outlined only */
+    .hero-title-sub{
+      margin:.3rem 0 0;
+      font-size:clamp(3.5rem,8vw,5.2rem);
+      line-height:.9;
+      font-weight:700;
+      letter-spacing:-.05em;
+      color:transparent;
+      -webkit-text-stroke:1px #b3b3b3;
+    }
+
+    .hero-location{margin-top:1rem;font-size:.95rem;color:#666;}
+
+    .hero-arrow{
+      position:absolute;
+      right:18%;top:40%;
+      transform:translate(50%,-50%);
+      width:2.6rem;height:2.6rem;
+      border-radius:999px;
+      border:1px solid #111;
+    }
+    .hero-arrow::before{
+      content:"↗";
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;
+    }
+
+    /* HERO IMAGE – normal size, sharp, soft fade into background */
+    .hero-media{
+      margin-top:2.6rem;
+      display:flex;
+      justify-content:center;
+      position:relative;
+      overflow:visible;
+    }
+    .hero-image{
+      width:min(340px,80vw);
+      object-fit:cover;
+      border-radius:1.4rem;
+      box-shadow:0 24px 40px rgba(0,0,0,0.28);
+    }
+    .hero-media::after{
+      content:"";
+      position:absolute;
+      left:0;right:0;bottom:-1px;
+      height:110px;
+      background:linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 0%,
+        rgba(249,249,249,0.95) 60%,
+        #ffffff 100%
+      );
+      pointer-events:none;
+    }
+
+    /* HERO BUTTONS – under image */
+    .hero-cta{
+      margin-top:2.2rem;
+      display:flex;
+      justify-content:center;
+      gap:.9rem;
+    }
+
+    /* SOCIAL ICON BAR (right side) */
+    .social-bar{
+      position:fixed;
+      right:1.8rem;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      flex-direction:column;
+      gap:0.75rem;
+      z-index:30;
+    }
+    .social-bar a{
+      width:2.4rem;
+      height:2.4rem;
+      border-radius:999px;
+      background:#111;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.15rem;
+      transition:background .2s ease, color .2s ease, transform .1s ease;
+    }
+    .social-bar a:hover{
+      background:#ff3b6a;
+      color:#fff;
+      transform:translateY(-1px);
+    }
+
+    /* ALT PAGE utility (kept for other files, safe here) */
+    .alt-page{background:#f7f7f7;}
+    .alt-main{padding:3.5rem 0 4rem;}
+    .alt-hero{
+      max-width:720px;margin:0 auto;padding:0 4vw;
+    }
+    .alt-hero h1{
+      margin-top:0;margin-bottom:1.2rem;
+      font-size:clamp(2.3rem,4vw,2.8rem);
+      letter-spacing:-.03em;
+    }
+    .alt-hero p{margin-bottom:1.6rem;color:#555;}
+    .alt-list{
+      margin:0 0 2rem 1.1rem;padding:0;color:#333;
+    }
+    .alt-list li{margin-bottom:.45rem;}
+
+    /* Moving gradient animation (used by scenery + text) */
+    @keyframes heroGradientMove {
+      0%   { background-position:0% 0%; }
+      50%  { background-position:80% 40%; }
+      100% { background-position:40% 100%; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:900px){
+      .header-inner{padding-inline:4vw;}
+      .main-nav{display:none;}
+      .hero-arrow{right:12%;}
+    }
+    @media (max-width:700px){
+      .social-bar{display:none;} /* hide icons on very small screens */
+    }
+    @media (max-width:600px){
+      .hero-cta{
+        flex-direction:column;
+        align-items:center;
+        margin-top:2rem;
+      }
+      .hero-image{width:min(300px,88vw);}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Alex<span class="dot">.</span></div>
+
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="designer.html">Designer</a>
+        <a href="photographer.html">Photographer</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch">
+          <span class="lang lang--inactive">FR</span>
+          <span class="lang">EN</span>
+        </div>
+        <a href="mailto:hello@alexportfolio.com" class="btn btn-dark">
+          hello@alexportfolio.com
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SOCIAL ICONS BAR -->
+  <div class="social-bar">
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank" aria-label="LinkedIn">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:hello@alexportfolio.com" aria-label="Email">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
+
+    <!-- GitHub -->
+    <a href="https://github.com/YOUR-GITHUB" target="_blank" aria-label="GitHub">
+      <i class="fa-brands fa-github"></i>
+    </a>
+
+    <!-- Pinterest -->
+    <a href="https://www.pinterest.com/YOUR-PINTEREST" target="_blank" aria-label="Pinterest">
+      <i class="fa-brands fa-pinterest-p"></i>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/YOUR-INSTAGRAM" target="_blank" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <!-- blurred moving scenery -->
+      <div class="hero-bg"></div>
+
+      <div class="hero-inner">
+        <p class="hero-intro">
+          <span class="wave">👋</span> my name is <strong>Alex</strong> and I am a freelance
+        </p>
+
+        <div class="hero-titles">
+          <h1 class="hero-title-main">
+            Webdesigner
+            <span class="hero-arrow"></span>
+          </h1>
+          <h2 class="hero-title-sub">&amp; Photographer</h2>
+        </div>
+
+        <p class="hero-location">based in your city, working worldwide.</p>
+
+        <div class="hero-media">
+          <!-- hero image -->
+          <img src="hero.jpeg" alt="Portrait of Alex" class="hero-image" />
+        </div>
+
+        <div class="hero-cta">
+          <a href="designer.html" class="btn btn-dark">You need a designer</a>
+          <a href="photographer.html" class="btn btn-outline">You need a photographer</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
